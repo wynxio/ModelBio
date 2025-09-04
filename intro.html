@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intro Screen</title>
+  <style>
+    .textIntroContainer {
+      margin: 0;
+      height: 100vh;
+      background: #0d0d0d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    .intro-container {
+      text-align: center;
+      position: relative;
+    }
+
+    /* Glowing Line */
+    .glow-line {
+      width: 300px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+      margin: 25px auto;
+      animation: glow 2s infinite alternate;
+      border-radius: 2px;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+      }
+      to {
+        box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+      }
+    }
+
+    .first-name {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #00e5ff;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .second-name {
+      font-size: 2.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #ff4081;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+    <div  class="textIntroContainer">
+<div class="intro-container">
+    <div class="first-name">SABEER ALDIN</div>
+    <div class="glow-line"></div>
+    <div class="second-name"></div>
+  </div>
+    </div>
+  
+</body>
+
+</html>

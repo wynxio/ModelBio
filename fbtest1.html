@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
+    .profile-section {
+      text-align: center;
+      padding: 30px 20px;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      margin-bottom: 15px;
+    }
+    .profile-section h2 {
+      margin: 0;
+      font-weight: bold;
+    }
+    .container-custom {
+      width: 90%;
+      margin: auto;
+    }
+    .post {
+      background: #fff;
+      color: #333;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      padding: 15px;
+      margin-bottom: 25px;
+    }
+    .post h5 {
+      font-weight: bold;
+    }
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .media-grid img,
+    .media-grid video {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      height: 150px;
+      object-fit: cover;
+    }
+    .overlay {
+      position: relative;
+    }
+    .overlay span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .modal-content {
+      background: #000;
+      text-align: center;
+    }
+    .modal-content img,
+    .modal-content video {
+      max-width: 100%;
+      max-height: 80vh;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Profile Section -->
+  <div class="profile-section">
+    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="profile-pic">
+    <h2>John Doe</h2>
+    <p>Building delightful web apps. Trainer & mentor.</p>
+  </div>
+
+  <div class="container-custom">
+    <!-- Text Post -->
+    <div class="post">
+      <h5>Exciting Update!</h5>
+      <p>Just launched a new project today 🚀. Feeling motivated and grateful.</p>
+    </div>
+
+    <!-- Single Image Post -->
+    <div class="post">
+      <h5>Beautiful Sunset</h5>
+      <div class="media-grid">
+        <img src="https://picsum.photos/id/1015/800/600" alt="Post Image" data-bs-toggle="modal" data-bs-target="#mediaModal" data-type="image">
+      </div>
+    </div>
+
+    <!-- Single Video Post -->
+    <div class="post">
+      <h5>My Coding Vlog</h5>
+      <div class="media-grid">
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+      </div>
+    </div>
+
+    <!-- Multi Image/Video Post -->
+    <div class="post">
+      <h5>Trip Memories</h5>
+      <div class="media-grid">
+        <img src="https://picsum.photos/id/1025/800/600" alt="Post Image" data-bs-toggle="modal" data-bs-target="#mediaModal" data-type="image">
+        <img src="https://picsum.photos/id/1035/800/600" alt="Post Image" data-bs-toggle="modal" data-bs-target="#mediaModal" data-type="image">
+        <video src="https://www.w3schools.com/html/movie.mp4" data-bs-toggle="modal" data-bs-target="#mediaModal" data-type="video"></video>
+        <div class="overlay" data-bs-toggle="modal" data-bs-target="#mediaModal" data-type="image">
+          <img src="https://picsum.photos/id/1045/800/600" alt="Post Image">
+          <span>+2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Popup -->
+  <div class="modal fade" id="mediaModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const mediaModal = document.getElementById('mediaModal');
+    const modalBody = mediaModal.querySelector('.modal-body');
+
+    document.querySelectorAll('.media-grid img, .media-grid video').forEach(item => {
+      item.addEventListener('click', function() {
+        modalBody.innerHTML = '';
+        if (this.tagName.toLowerCase() === 'img') {
+          const img = document.createElement('img');
+          img.src = this.src;
+          img.className = 'img-fluid';
+          modalBody.appendChild(img);
+        } else if (this.tagName.toLowerCase() === 'video') {
+          const video = document.createElement('video');
+          video.src = this.src;
+          video.controls = true;
+          video.autoplay = true;
+          video.className = 'img-fluid';
+          modalBody.appendChild(video);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

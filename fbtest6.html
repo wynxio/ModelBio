@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile — Demo</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --profile-size: 120px;
+        }
+
+        .bodyPrtfolio {
+            background: #f0f2f5;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            padding-top: 20px;
+        }
+
+        .container-custom {
+            max-width: 80%;
+        }
+
+        @media (max-width: 768px) {
+            .container-custom {
+                max-width: 90%;
+            }
+        }
+
+        .profile-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(20, 20, 40, 0.06);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: var(--profile-size);
+            height: var(--profile-size);
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 6px 18px rgba(20, 20, 40, 0.08);
+        }
+
+        .name-large {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(20, 20, 40, 0.04);
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .post-header {
+            padding: 14px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .post-body {
+            padding: 12px 16px 16px 16px;
+        }
+
+        .stack-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 12px 16px;
+        }
+
+        .stack-item {
+            flex: 1 1 calc(50% - 6px);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            max-height: 200px;
+        }
+
+        .stack-item img,
+        .stack-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .more-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .post-title {
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        .modal-media {
+            max-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .modal-media img,
+        .modal-media video {
+            max-width: 100%;
+            max-height: 70vh
+        }
+
+        /* Masonry layout */
+        .posts-masonry {
+            column-count: 2;
+            column-gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .posts-masonry {
+                column-count: 1;
+            }
+        }
+
+        .modalcloseButton {
+            position:absolute;
+            top: -16px;
+            right: -10px;
+            border-radius: 50%;
+            z-index: 9999999 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bodyPrtfolio">
+        <div class="container container-custom">
+            <!-- Profile section on top -->
+            <div class="profile-card text-center">
+                <div class="d-flex flex-column align-items-center">
+                    <img class="profile-avatar"
+                        src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop"
+                        alt="Avatar">
+                    <div class="mt-3">
+                        <div class="name-large">Sabeer MN</div>
+                        <div class="text-muted">Full Stack Developer • Chennai</div>
+                    </div>
+                </div>
+                <hr class="my-3">
+                <div class="text-center small text-muted">
+                    <div><strong>About</strong></div>
+                    <div>Building delightful web apps. Trainer & mentor.</div>
+                    <!-- Social icons -->
+                    <div class="mt-3 d-flex justify-content-center gap-3 fs-5">
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Masonry -->
+            <div class="posts-masonry">
+                <!-- Text post -->
+                <article class="post-card">
+                    <div class="post-header">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
+                            alt="mini" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+                        <div>
+                            <div class="fw-bold">Sabeer MN</div>
+                            <div class="text-muted small">September 2 at 10:41 AM • Public</div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">New course launch — React Intensive</div>
+                        <p class="mb-1 text-muted">We are launching a 2-month React intensive course with one-to-one
+                            mentorship and 100% placement assistance. Early-bird seats are limited — enroll now!</p>
+                    </div>
+                </article>
+
+                <!-- Photo post with stack gallery -->
+                <article class="post-card" data-media='[
+          {"type":"image","src":"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop"},
+          {"type":"image","src":"https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee?q=80&w=1200&auto=format&fit=crop"},
+          {"type":"image","src":"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1200&auto=format&fit=crop"},
+          {"type":"image","src":"https://images.unsplash.com/photo-1504198266287-1659872e6590?q=80&w=1200&auto=format&fit=crop"},
+          {"type":"image","src":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"}
+        ]'>
+                    <div class="post-header">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
+                            alt="mini" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+                        <div>
+                            <div class="fw-bold">Sabeer MN</div>
+                            <div class="text-muted small">August 20 • Public</div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">Trip Highlights</div>
+                        <p class="text-muted">A few highlights from my recent trip — so many memories!</p>
+                    </div>
+                    <div class="stack-gallery"></div>
+                </article>
+
+                <!-- Mixed photo + video post -->
+                <article class="post-card" data-media='[
+          {"type":"image","src":"https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop"},
+          {"type":"video","src":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm"},
+          {"type":"image","src":"https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop"}
+        ]'>
+                    <div class="post-header">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
+                            alt="mini" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+                        <div>
+                            <div class="fw-bold">Sabeer MN</div>
+                            <div class="text-muted small">July 3 • Public</div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-title">Workshop snippets</div>
+                        <p class="text-muted">Some photos and a short clip from yesterday's hands-on workshop.</p>
+                    </div>
+                    <div class="stack-gallery"></div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for lightbox / carousel -->
+    <div class="modal fade" id="mediaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0 position-relative">
+                <!-- ✅ Fixed Close Button Placement -->
+                <button type="button" class="btn btn-light modalcloseButton"  
+                    data-bs-dismiss="modal">X</button>
+
+                <div class="modal-body p-0">
+                    <div id="mediaCarousel" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-inner" id="carouselInner"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#mediaCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#mediaCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const posts = document.querySelectorAll('article.post-card[data-media]');
+            posts.forEach((post) => {
+                const media = JSON.parse(post.getAttribute('data-media'));
+                const gallery = post.querySelector('.stack-gallery');
+                const show = 4;
+                media.forEach((m, idx) => {
+                    if (idx < show) {
+                        const el = document.createElement('div');
+                        el.className = 'stack-item';
+                        if (m.type === 'image') {
+                            const img = document.createElement('img');
+                            img.src = m.src + '&q=80&w=800&auto=format&fit=crop';
+                            el.appendChild(img);
+                        } else if (m.type === 'video') {
+                            const vid = document.createElement('video');
+                            vid.src = m.src; vid.muted = true; vid.playsInline = true; vid.loop = true;
+                            el.appendChild(vid);
+                        }
+                        el.addEventListener('click', () => openLightbox(media, idx));
+                        gallery.appendChild(el);
+                    }
+                });
+                if (media.length > show) {
+                    const el = document.createElement('div');
+                    el.className = 'stack-item';
+                    const img = document.createElement('img');
+                    img.src = media[show - 1].src + '&q=80&w=800&auto=format&fit=crop';
+                    el.appendChild(img);
+                    const overlay = document.createElement('div');
+                    overlay.className = 'more-overlay';
+                    overlay.textContent = '+' + (media.length - show + 1);
+                    el.appendChild(overlay);
+                    el.addEventListener('click', () => openLightbox(media, show - 1));
+                    gallery.appendChild(el);
+                }
+            });
+        });
+
+        function openLightbox(mediaArray, startIndex) {
+            const carouselInner = document.getElementById('carouselInner');
+            carouselInner.innerHTML = '';
+            mediaArray.forEach((m, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-item' + (i === startIndex ? ' active' : '');
+                const container = document.createElement('div');
+                container.className = 'd-flex align-items-center justify-content-center modal-media';
+                if (m.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = m.src + '&q=80&w=1600&auto=format&fit=crop';
+                    container.appendChild(img);
+                } else if (m.type === 'video') {
+                    const vid = document.createElement('video');
+                    vid.src = m.src; vid.controls = true; vid.autoplay = false; vid.playsInline = true;
+                    container.appendChild(vid);
+                }
+                slide.appendChild(container);
+                carouselInner.appendChild(slide);
+            });
+            const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+            modal.show();
+        }
+    </script>
+</body>
+
+</html>

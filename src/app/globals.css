@@ -1,0 +1,77 @@
+ 
+body{
+  background-color:linear-gradient(to right, #e9e9f2, #ebf1eb)
+}
+.bgHeaderNav{
+  background: #30c28f;
+}
+
+.imgPreviewAdmin
+{
+  width:auto;
+  height:auto;
+  max-width: 200px;
+  max-height: 200px;
+}
+.width80{
+  width: 80%;
+}
+.nav-item{
+  border: 1px solid black !important;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+  padding:0px 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.singleItem{
+  border: 1px solid black !important;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  margin-top: 2px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.previewContainer{
+  
+  width:200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.previewBox{
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+.previewItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+    gap:20px;
+}
+.thumbnailpreview{
+  width: auto;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+}
+.centerFlex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

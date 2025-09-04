@@ -1,0 +1,6 @@
+node_modules/
+/README.md
+.DS_Store*
+.next/
+# Ignore README.md
+README.md
