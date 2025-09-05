@@ -3,7 +3,11 @@ import React from 'react'
 export const ArticleMediaPost = ({ post, bindPostAuthorHeader }) => {
   // build media array from post.items
   const mediaItems = (post?.items || []).map(item => ({
-    type: item.filetype === "video" ? "video" : "image",
+    type: item.filetype === "video" 
+    ? "video" 
+    : item.filetype === "audio" 
+      ? "audio" 
+      : "image",
     src: item.fileuploadedpath,
     label: item.label || "",
   }))

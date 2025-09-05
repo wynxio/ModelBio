@@ -1,22 +1,26 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import "../Styles/Portfolio.css";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaXRay } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+  FaXRay,
+} from "react-icons/fa";
 import axios from "axios";
 import { ArticleTextPost } from "../components/ArticleTextPost";
 import { ArticleMediaPost } from "../components/ArticleMediaPost";
- 
+
 // import { PortfolioHeader } from "../components/PortfolioHeader";
- 
 
 export default function Portfolio() {
-
   const [about, setAbout] = useState(null);
   const [images, setImages] = useState([]);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('/api/about')
+    fetch("/api/about")
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -25,9 +29,7 @@ export default function Portfolio() {
       })
       .catch((err) => console.error("Error fetching about:", err));
 
-
-
-    fetch('/api/profileimages')
+    fetch("/api/profileimages")
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -35,13 +37,12 @@ export default function Portfolio() {
         }
       })
       .catch((err) => console.error("Error fetching profile images:", err));
-
-  }, [])
+  }, []);
 
   const fetchPosts = async () => {
     try {
       const res = await axios.get("/api/posts");
-     debugger;
+
       setPosts(res.data.posts || []);
     } catch (err) {
       console.error("Error fetching posts:", err);
@@ -50,57 +51,56 @@ export default function Portfolio() {
 
   useEffect(() => {
     fetchPosts();
-    
   }, []);
 
   const profileImage = images?.find((img) => img.type === "profile");
   const profileName = about?.name || "";
-  const profileImagePath = profileImage ? `/uploads/${profileImage.imagePath}` : "/defaultpic.png"
+  const profileImagePath = profileImage
+    ? `/uploads/${profileImage.imagePath}`
+    : "/defaultpic.png";
 
+  const bindPostAuthorHeader = (createdtTime) => {
+    let formattedTime = "";
 
-const bindPostAuthorHeader = (createdtTime) => {
-  let formattedTime = "";
+    if (createdtTime) {
+      const date = new Date(createdtTime);
 
-  if (createdtTime) {
-    const date = new Date(createdtTime);
+      // Convert to IST by using toLocaleString with 'en-IN'
+      formattedTime = date.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        year: "numeric",
+        month: "short", // Jan, Feb, etc.
+        day: "2-digit",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true, // 12-hour format with AM/PM
+      });
+    }
 
-    // Convert to IST by using toLocaleString with 'en-IN'
-    formattedTime = date.toLocaleString("en-IN", {
-      timeZone: "Asia/Kolkata",
-      year: "numeric",
-      month: "short",  // Jan, Feb, etc.
-      day: "2-digit",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,    // 12-hour format with AM/PM
-    });
-  }
-
-  return (
-    <div className="post-header">
-      <img
-        src={profileImagePath}
-        alt="mini"
-        className="rounded-circle"
-        style={{ width: "48px", height: "48px", objectFit: "cover" }}
-      />
-      <div>
-        <div className="fw-bold">{profileName}</div>
-        <div className="text-muted small">
-          {formattedTime}
+    return (
+      <div className="post-header">
+        <img
+          src={profileImagePath}
+          alt="mini"
+          className="rounded-circle"
+          style={{ width: "48px", height: "48px", objectFit: "cover" }}
+        />
+        <div>
+          <div className="fw-bold">{profileName}</div>
+          <div className="text-muted small">{formattedTime}</div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-
-const assignClickPopuptoPosts = ()=>{
+  const assignClickPopuptoPosts = () => {
     const posts = document.querySelectorAll("article.post-card[data-media]");
     posts?.forEach((post) => {
       const media = JSON.parse(post.getAttribute("data-media"));
       const gallery = post.querySelector(".stack-gallery");
       const show = 4;
+
+      gallery.innerHTML = "";
 
       media.forEach((m, idx) => {
         if (idx < show) {
@@ -117,6 +117,22 @@ const assignClickPopuptoPosts = ()=>{
             vid.playsInline = true;
             vid.loop = true;
             el.appendChild(vid);
+          } else if (m.type === "audio") {
+            // Create wrapper div
+            const wrapper = document.createElement("div");
+            wrapper.className = "audio-wrapper";
+
+            // Create audio element
+            const aud = document.createElement("audio");
+            aud.className = "stack-item-audio";
+            aud.src = m.src;
+            aud.controls = true; // show play/pause UI
+
+            // Append audio inside wrapper
+            wrapper.appendChild(aud);
+
+            // Append wrapper inside your stack item
+            el.appendChild(wrapper);
           }
           el.addEventListener("click", () => openLightbox(media, idx));
           gallery.appendChild(el);
@@ -127,7 +143,7 @@ const assignClickPopuptoPosts = ()=>{
         const el = document.createElement("div");
         el.className = "stack-item";
         const img = document.createElement("img");
-        img.src = media[show - 1].src + "&q=80&w=800&auto=format&fit=crop";
+        img.src = media[show - 1].src + "?q=80&w=800&auto=format&fit=crop";
         el.appendChild(img);
 
         const overlay = document.createElement("div");
@@ -139,16 +155,16 @@ const assignClickPopuptoPosts = ()=>{
         gallery.appendChild(el);
       }
     });
-}
+  };
 
-useEffect(() => {
-  if (posts.length > 0) {
-    // Delay to ensure DOM is updated
-    setTimeout(() => {
-      assignClickPopuptoPosts();
-    }, 0);
-  }
-}, [posts]);
+  useEffect(() => {
+    if (posts?.length > 0) {
+      // Delay to ensure DOM is updated
+      setTimeout(() => {
+        assignClickPopuptoPosts();
+      }, 0);
+    }
+  }, [posts]);
 
   function openLightbox(mediaArray, startIndex) {
     const carouselInner = document.getElementById("carouselInner");
@@ -184,8 +200,6 @@ useEffect(() => {
   return (
     <div className="bodyPrtfolio">
       <div className="container container-custom">
-       
-
         {/*   Portfolio header start */}
         <div className="profile-card text-center">
           <div className="d-flex flex-column align-items-center">
@@ -205,7 +219,6 @@ useEffect(() => {
           </div>
           <hr className="my-3" />
           <div className="text-center small text-muted">
-
             <div className="social-links d-flex gap-3 my-3 centerFlex">
               {about?.facebook && (
                 <a
@@ -248,19 +261,32 @@ useEffect(() => {
         </div>
         {/*   Portfolio header end */}
 
-
-       
         <div className="posts-masonry">
           {posts?.map((post, index) =>
-            post.type === "text" ? 
-            <ArticleTextPost key={index}  post={post} bindPostAuthorHeader={bindPostAuthorHeader} ></ArticleTextPost> 
-            : <ArticleMediaPost key={index}  post={post} bindPostAuthorHeader={bindPostAuthorHeader} ></ArticleMediaPost> 
+            post.type === "text" ? (
+              <ArticleTextPost
+                key={index}
+                post={post}
+                bindPostAuthorHeader={bindPostAuthorHeader}
+              ></ArticleTextPost>
+            ) : (
+              <ArticleMediaPost
+                key={index}
+                post={post}
+                bindPostAuthorHeader={bindPostAuthorHeader}
+              ></ArticleMediaPost>
+            )
           )}
         </div>
       </div>
 
       {/* Modal */}
-      <div className="modal fade" id="mediaModal" tabIndex="-1" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="mediaModal"
+        tabIndex="-1"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-xl modal-dialog-centered">
           <div className="modal-content bg-transparent border-0">
             <div className="modal-body p-0 position-relative modalPreviewBackground">
