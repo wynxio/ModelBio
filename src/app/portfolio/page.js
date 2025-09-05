@@ -58,7 +58,7 @@ export default function Portfolio() {
   const profileImage = images?.find((img) => img.type === "profile");
   const profileName = about?.name || "";
   const profileImagePath = profileImage
-    ? `/uploads/${profileImage.imagePath}`
+    ? `/${profileImage.imagePath}`
     : "/defaultpic.png";
 
   const bindPostAuthorHeader = (createdtTime) => {
@@ -209,7 +209,7 @@ export default function Portfolio() {
               className="profile-avatar"
               src={
                 profileImage
-                  ? `/uploads/${profileImage.imagePath}`
+                  ? `/${profileImage.imagePath}`
                   : "/defaultpic.png"
               }
               alt=""

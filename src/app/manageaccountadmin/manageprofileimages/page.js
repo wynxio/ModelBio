@@ -15,7 +15,7 @@ export default function ManageProfileImages() {
     if (data.success) {
       const imgMap = {};
       data.data.forEach((item) => {
-        imgMap[item.type] = `/uploads/${item.imagePath}`;
+        imgMap[item.type] = `/${item.imagePath}`;
       });
       setImages(imgMap);
     }
@@ -31,6 +31,7 @@ export default function ManageProfileImages() {
 
     // show preview immediately (before upload)
     const previewUrl = URL.createObjectURL(file);
+    debugger;
     setImages((prev) => ({ ...prev, [type]: previewUrl }));
   };
 
@@ -69,7 +70,12 @@ export default function ManageProfileImages() {
 
         {images[type] ? (
           <img
-            src={images[type]}
+            //src={`${images[type]}?v=${new Date().getTime()}`}
+            src={
+              images[type].includes("blob")
+                ? images[type]
+                : `${images[type]}?v=${new Date().getTime()}`
+            }
             alt={`${type} preview`}
             className="img-fluid rounded mb-3"
             style={{ maxWidth: "220px", maxHeight: "220px", objectFit: "cover" }}
@@ -114,7 +120,7 @@ export default function ManageProfileImages() {
         <div className="row justify-content-center">
           <div className="col-md-6">
             <ImageUploader type="profile" label="Profile Image" />
-            <ImageUploader type="cover" label="Cover Image" />
+            {/* <ImageUploader type="cover" label="Cover Image" /> */}
             <ImageUploader type="welcome" label="Welcome Image" />
           </div>
         </div>

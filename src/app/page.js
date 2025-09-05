@@ -68,10 +68,10 @@ export default function Home() {
                 <img
                   src={
                     welcomeImage
-                      ? `/uploads/${welcomeImage.imagePath}`
+                      ? `/${welcomeImage.imagePath}`
                       : "/defaultpic.png"
                   }
-                  alt="Profile Picture"
+                  alt=""
                   className="profile-pic"
                 />
               </div>

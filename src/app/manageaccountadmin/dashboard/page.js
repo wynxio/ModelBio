@@ -18,7 +18,7 @@ export default function Dashboard() {
         <h3 className="Dashboard-subheading">Manage your Photos and Posts .</h3>
         <div className="cards-grid">
           <div className="card">
-            <h4>Manage Welcome/Cover/Profile Photo</h4>
+            <h4>Manage Welcome/Profile Photo</h4>
             <button
               onClick={(e) => {
                 e.preventDefault();

@@ -4,9 +4,10 @@ import { ObjectId } from "mongodb";
 import fs from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import sharp from "sharp";
 
 // Directory where files will be saved
-const uploadDir = path.join(process.cwd(), "public", "uploads");
+const uploadDir = path.join(process.cwd(), "public");
 
 // Ensure folder exists
 if (!fs.existsSync(uploadDir)) {
@@ -46,11 +47,22 @@ export async function POST(req) {
   try {
     const db = await connectToDatabase();
     const imageCollection = db.collection(process.env.NEXT_PUBLIC_GENERAL_FILES);
+   
 
+    // if(existing){
+    //   if (existing.imagePath) {
+    //     const oldFilePath = path.join(uploadDir, existing.imagePath);
+    //     if (fs.existsSync(oldFilePath)) {
+    //       fs.unlinkSync(oldFilePath);
+    //     }
+    //   }
+    // }
     // Parse multipart form data
     const formData = await req.formData();
     const type = formData.get("type"); // "profile" | "cover" | "welcome"
     const file = formData.get("file"); // file input
+
+     const existing = await imageCollection?.findOne({ type });
 
     if (!file || !type) {
       return withCorsHeaders(
@@ -62,25 +74,46 @@ export async function POST(req) {
     }
 
     // Generate random filename
-    const ext = path.extname(file.name) || ".jpg";
-    const randomName = randomUUID() + ext;
+
+    //old
+    //const ext = path.extname(file.name) || ".jpg";
+
+
+    //new for jpg
+    const ext =  ".jpg";
+
+
+    //const randomName = randomUUID() + ext;
+    const randomName = type + ext;
+    //const randomName = type + ".jpg";
     const filePath = path.join(uploadDir, randomName);
 
     // Save file to disk
     const arrayBuffer = await file.arrayBuffer();
-    fs.writeFileSync(filePath, Buffer.from(arrayBuffer));
+
+
+    //old
+    //fs.writeFileSync(filePath, Buffer.from(arrayBuffer));
+
+
+
+
+    //new
+   // Convert file to JPG buffer
+    const buffer = Buffer.from(arrayBuffer);
+    const jpgBuffer = await sharp(buffer)
+      .jpeg({ quality: 90 }) // adjust quality if needed
+      .toBuffer();
+    fs.writeFileSync(filePath, jpgBuffer);
+
+
 
     // Check if entry with same type exists
-    const existing = await imageCollection.findOne({ type });
+   
 
     if (existing) {
       // Delete old file
-      if (existing.imagePath) {
-        const oldFilePath = path.join(uploadDir, existing.imagePath);
-        if (fs.existsSync(oldFilePath)) {
-          fs.unlinkSync(oldFilePath);
-        }
-      }
+      
 
       // Update with new file
       await imageCollection.updateOne(

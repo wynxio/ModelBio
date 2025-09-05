@@ -40,7 +40,7 @@ export const PortfolioHeader = () => {
                     className="profile-avatar"
                     src={
                     profileImage
-                      ? `/uploads/${profileImage.imagePath}`
+                      ? `/${profileImage.imagePath}`
                       : "/defaultpic.png"
                   }
                     alt=""
