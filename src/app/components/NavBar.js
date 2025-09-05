@@ -103,6 +103,18 @@ export const NavBar = () => {
                   Edit About Me
                 </a>
               </li>
+               <li className="nav-item">
+                <a
+                  className="nav-link text-white"
+                   
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/manageaccountadmin/messagesforme");
+                  }}
+                >
+                  Messages
+                </a>
+              </li>
               <li className="nav-item">
                 
                 <a

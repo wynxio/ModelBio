@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { ArticleTextPost } from "../components/ArticleTextPost";
 import { ArticleMediaPost } from "../components/ArticleMediaPost";
+import { ContactMe } from "../components/ContactMe";
+ 
 
 // import { PortfolioHeader } from "../components/PortfolioHeader";
 
@@ -257,6 +259,9 @@ export default function Portfolio() {
                 </a>
               )}
             </div>
+          </div>
+          <div className="text-center">
+<ContactMe></ContactMe>
           </div>
         </div>
         {/*   Portfolio header end */}

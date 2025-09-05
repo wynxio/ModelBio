@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { ContactMe } from "./ContactMe";
+
 
 export const PortfolioHeader = () => {
     const [about, setAbout] = useState(null);
@@ -89,6 +91,9 @@ export const PortfolioHeader = () => {
                     </a>
                   )}
                 </div>
+            </div>
+            <div className="text-center">
+                    <ContactMe></ContactMe>
             </div>
         </div>
     )
