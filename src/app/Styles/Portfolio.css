@@ -155,6 +155,7 @@
   background-color: black;
   padding: 20px;
   border-radius: 20px;
+  max-height: 100%;
 }
 
 .modal.show .modal-dialog{
@@ -187,4 +188,8 @@
     max-width: 100%;
     max-height: 100%;
     min-height: 500px;
+}
+.modal{
+  max-height: 98vh;
+
 }
