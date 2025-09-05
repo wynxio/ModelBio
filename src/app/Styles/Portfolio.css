@@ -76,7 +76,7 @@
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  /* max-height: 200px; */
+  max-height: 1200px;
 }
 .stack-item-audio {
   width: 100%;

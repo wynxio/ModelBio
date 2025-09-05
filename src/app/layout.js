@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: ModalIntroName,
   description: `Portfolio of ${ModalIntroName}`,
+  icons: {
+    icon: "/profile.jpg?v=2",
+  },
 };
 
 export default function RootLayout({ children }) {

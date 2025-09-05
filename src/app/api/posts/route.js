@@ -58,7 +58,7 @@ export async function POST(req) {
       // Text post
       const { title, text } = await req.json();
 
-      if (!title || !text) {
+      if (!title && !text) {
         return withCorsHeaders(
           new Response(JSON.stringify({ success: false, error: "Title and Text are required" }), {
             status: 400,
@@ -85,6 +85,7 @@ export async function POST(req) {
       // Photo/Video post
       const formData = await req.formData();
       const title = formData.get("title");
+      const text = formData.get("text");
       const items = [];
 
       for (const [key, value] of formData.entries()) {
@@ -101,9 +102,9 @@ export async function POST(req) {
         }
       }
 
-      if (!title || items.length === 0) {
+      if (items.length === 0) {
         return withCorsHeaders(
-          new Response(JSON.stringify({ success: false, error: "Title and at least one file required" }), {
+          new Response(JSON.stringify({ success: false, error: "at least one file required" }), {
             status: 400,
           })
         );
@@ -112,6 +113,7 @@ export async function POST(req) {
       const result = await postCollection.insertOne({
         type: "media",
         title,
+        text,
         items,
         createdTime,
       });

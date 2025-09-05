@@ -118,6 +118,7 @@ export default function Portfolio() {
             vid.muted = true;
             vid.playsInline = true;
             vid.loop = true;
+            vid.controls = true;
             el.appendChild(vid);
           } else if (m.type === "audio") {
             // Create wrapper div

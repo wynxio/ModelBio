@@ -2,9 +2,11 @@
 import { useState } from "react";
 import { AdminLayout } from "@/app/components/AdminLayout";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 export default function ManagePosts() {
-  const [postType, setPostType] = useState("text");
+  const [postType, setPostType] = useState("media");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [mediaItems, setMediaItems] = useState([{ file: null, label: "" }]);
@@ -30,22 +32,40 @@ export default function ManagePosts() {
     e.preventDefault();
     try {
       if (postType === "text") {
+        if(title === "" && text === "") {
+          alert('heading or subheading is must for text post');
+        }
+        else{
         const res = await axios.post("/api/posts", { title, text });
         setMessage(res.data.message);
+        toast.success(res.data.message);
+        }
+      
       } else {
         const formData = new FormData();
         formData.append("title", title);
-        mediaItems.forEach((item, i) => {
+        formData.append("text", text);
+        mediaItems?.forEach((item, i) => {
           if (item.file) {
             formData.append(`file-${i}`, item.file);
             formData.append(`label-${i}`, item.label);
           }
         });
 
-        const res = await axios.post("/api/posts", formData, {
+       
+
+        if(mediaItems[0]?.file === null) {
+          alert('please select valid image/video');
+        }
+        else{
+ const res = await axios.post("/api/posts", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setMessage(res.data.message);
+        toast.success(res.data.message);
+        }
+
+       
       }
 
       // Reset form after success
@@ -77,36 +97,37 @@ export default function ManagePosts() {
               value={postType}
               onChange={(e) => setPostType(e.target.value)}
             >
-              <option value="text">Text</option>
+              
               <option value="media">Photos or Videos</option>
+              <option value="text">Text</option>
             </select>
           </div>
 
           {/* Title */}
           <div className="mb-3">
-            <label className="form-label">Post Title</label>
+            <label className="form-label">Heading</label>
             <input
               type="text"
               className="form-control"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required
+              
             />
           </div>
 
           {/* Text Post */}
-          {postType === "text" && (
+          
             <div className="mb-3">
-              <label className="form-label">Post Content</label>
+              <label className="form-label">Sub Heading</label>
               <textarea
                 className="form-control"
                 rows="4"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                required
+                
               ></textarea>
             </div>
-          )}
+          
 
           {/* Media Post */}
           {postType === "media" && (
